@@ -1,0 +1,1648 @@
+记录python使用中一些实用的模块，用法，与注意事项
+
+
+1.模块
+OS模块：
+1、os.name
+
+输出字符串指示正在使用的平台。如果是window 则用’nt’表示，对于Linux/Unix用户，它是’posix’。
+
+2、os.getcwd()
+
+函数得到当前工作目录，即当前Python脚本工作的目录路径。
+
+3、os.listdir()
+
+返回指定目录下的所有文件和目录名。
+
+os.listdir(os.getcwd()) 
+[‘Django’, ‘DLLs’, ‘Doc’, ‘include’, ‘Lib’, ‘libs’, ‘LICENSE.txt’, ‘MySQL-python-wininst.log’, ‘NEWS.txt’, ‘PIL-wininst.log’, ‘python.exe’, ‘pythonw.exe’, ‘README.txt’, ‘RemoveMySQL-python.exe’, ‘RemovePIL.exe’, ‘Removesetuptools.exe’, ‘Scripts’, ‘setuptools-wininst.log’, ‘tcl’, ‘Tools’, ‘w9xpopen.exe’]
+4、os.remove()
+
+删除一个文件。
+
+5、os.system()
+
+运行shell命令。
+
+os.system(‘dir’) 
+0 
+os.system(‘cmd’) #启动dos
+6、os.sep 可以取代操作系统特定的路径分割符。
+
+7、os.linesep字符串给出当前平台使用的行终止符
+
+os.linesep 
+‘\r\n’ #Windows使用’\r\n’，Linux使用’\n’而Mac使用’\r’。 
+os.sep 
+‘\’ #Windows
+8、os.path.split()
+
+函数返回一个路径的目录名和文件名
+
+os.path.split(‘C:\Python25\abc.txt’) 
+(‘C:\Python25’, ‘abc.txt’)
+9、os.path.isfile()和os.path.isdir()函数分别检验给出的路径是一个文件还是目录。
+
+os.path.isdir(os.getcwd()) 
+True 
+os.path.isfile(‘a.txt’) 
+False
+10、os.path.exists()函数用来检验给出的路径是否真地存在
+
+os.path.exists(‘C:\Python25\abc.txt’) 
+False 
+os.path.exists(‘C:\Python25’) 
+True
+11、os.path.abspath(name):获得绝对路径
+
+12、os.path.normpath(path):规范path字符串形式
+
+13、os.path.getsize(name):获得文件大小，如果name是目录返回0L
+
+14、os.path.splitext():分离文件名与扩展名
+
+os.path.splitext(‘a.txt’) 
+(‘a’, ‘.txt’)
+15、os.path.join(path,name):连接目录与文件名或目录
+
+os.path.join(‘c:\Python’,’a.txt’) 
+‘c:\Python\a.txt’ 
+os.path.join(‘c:\Python’,’f1’) 
+‘c:\Python\f1’
+16、os.path.basename(path):返回文件名
+
+os.path.basename(‘a.txt’) 
+‘a.txt’ 
+os.path.basename(‘c:\Python\a.txt’) 
+‘a.txt’
+17、os.path.dirname(path):返回文件路径
+
+os.path.dirname(‘c:\Python\a.txt’) 
+‘c:\Python’
+
+ stat模块
+
+if stat.S_ISREG(mode):           #判断是否一般文件
+   print 'Regular file.'
+elif stat.S_ISLNK (mode):         #判断是否链接文件
+   print 'Shortcut.'
+elif stat.S_ISSOCK (mode):        #判断是否套接字文件    
+   print 'Socket.'
+elif stat.S_ISFIFO (mode):        #判断是否命名管道
+   print 'Named pipe.'
+elif stat.S_ISBLK (mode):         #判断是否块设备
+   print 'Block special device.'
+elif stat.S_ISCHR (mode):         #判断是否字符设置
+　　print 'Character special device.'
+
+elif stat.S_ISDIR (mode):         #判断是否目录
+　　print 'directory.'
+##额外的两个函数
+stat.S_IMODE (mode): #返回文件权限的chmod格式
+　　print 'chmod format.'
+
+stat.S_IFMT (mode): #返回文件的类型
+　　print 'type of fiel.'
+
+string模块
+字符串属性：
+1.>字符串格式输出对齐
+
+>>> str = "Python stRING" 
+ 
+>>> print str.center(20)       #生成20个字符长度，str排中间
+   Python stRING   
+    
+>>> print str.ljust(20)            #生成20个字符长度，str左对齐
+Python stRING      
+ 
+>>> print str.rjust(20)            #生成20个字符长度，str右对齐
+       Python stRING
+       
+2.>大小写转换
+
+>>> str = "Python stRING"
+ 
+>>> str.upper()                #转大写
+'PYTHON STRING'
+ 
+>>> str.lower()                #转小写 
+'python string'
+ 
+>>> str.capitalize()       　　　　#字符串首为大写，其余小写
+'Python string'
+ 
+>>> str.swapcase()         #大小写对换 
+'pYTHON STring'
+ 
+>>> str.title()                #以分隔符为标记，首字符为大写，其余为小写
+'Python String'
+3.>字符串条件判断
+
+>>> str = '01234'
+ 
+>>> str.isalnum()                #是否全是字母和数字，并至少有一个字符
+True
+>>> str.isdigit()                #是否全是数字，并至少有一个字符
+True      
+ 
+ 
+>>> str = 'string'
+ 
+>>> str.isalnum()                  #是否全是字母和数字，并至少有一个字符
+True
+>>> str.isalpha()                  #是否全是字母，并至少有一个字符 
+True
+>>> str.islower()                  #是否全是小写，当全是小写和数字一起时候，也判断为True
+True
+ 
+>>> str = "01234abcd"
+ 
+>>> str.islower()                  #是否全是小写，当全是小写和数字一起时候，也判断为True
+True
+ 
+>>> str.isalnum()                  #是否全是字母和数字，并至少有一个字符
+True
+ 
+>>> str = ' '
+>>> str.isspace()                  #是否全是空白字符，并至少有一个字符
+True
+ 
+>>> str = 'ABC'
+ 
+>>> str.isupper()                  #是否全是大写，当全是大写和数字一起时候，也判断为True
+True
+ 
+>>> str = 'Aaa Bbb'
+ 
+>>> str.istitle()                  #所有单词字首都是大写，标题 
+True
+ 
+ 
+>>> str = 'string learn'
+ 
+>>> str.startswith('str')   　　　　　　　　　　　　　　#判断字符串以'str'开头
+True
+ 
+>>> str.endswith('arn')        　　　　　　　　　　　　　　#判读字符串以'arn'结尾
+True
+4.>字符串搜索定位与替换
+
+>>> str='string lEARn'
+ 
+>>> str.find('z')              #查找字符串，没有则返回-1，有则返回查到到第一个匹配的索引
+-1
+ 
+>>> str.find('n')              #返回查到到第一个匹配的索引
+4
+ 
+>>> str.rfind('n')         #返回的索引是最后一次匹配的
+11
+ 
+>>> str.index('a')         #如果没有匹配则报错 
+Traceback (most recent call last):
+  File "<input>", line 1, in <module>
+ValueError: substring not found
+  
+>>> str.index("n")      #同find类似,返回第一次匹配的索引值
+4
+ 
+>>> str.rindex("n")         #返回最后一次匹配的索引值
+11
+ 
+>>> str.count('a')      #字符串中匹配的次数
+0
+>>> str.count('n')      #同上
+2
+ 
+>>> str.replace('EAR','ear')        #匹配替换
+'string learn'
+ 
+>>> str.replace('n','N')
+'striNg lEARN'
+ 
+>>> str.replace('n','N',1)
+'striNg lEARn'
+ 
+>>> str.strip('n')          #删除字符串首尾匹配的字符，通常用于默认删除回车符 
+   
+'string lEAR' 
+   
+>>> str.lstrip('n')        #左匹配 
+   
+'string lEARn' 
+   
+>>> str.rstrip('n')        #右匹配 
+   
+'string lEAR' 
+ 
+>>> str = " tab"
+ 
+>>> str.expandtabs()       #把制表符转为空格
+' tab'
+ 
+>>> str.expandtabs(2)      #指定空格数
+' tab'
+5.>字符串编码与解码
+
+>>> str = "字符串学习"
+>>> str
+'\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2\xe5\xad\xa6\xe4\xb9\xa0'
+ 
+>>> str.decode('utf-8')                                #解码过程，将utf-8解码为unicode
+u'\u5b57\u7b26\u4e32\u5b66\u4e60'
+ 
+>>> str.decode("utf-8").encode('gbk')                      #编码过程，将unicode编码为gbk
+'\xd7\xd6\xb7\xfb\xb4\xae\xd1\xa7\xcf\xb0'
+ 
+>>> str.decode('utf-8').encode('utf-8')                        #将unicode编码为utf-8 
+'\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2\xe5\xad\xa6\xe4\xb9\xa0'
+6.>字符串分割变换
+
+>> str = "Learn string"
+ 
+>>> '-'.join(str)
+'L-e-a-r-n- -s-t-r-i-n-g'
+ 
+>>> li = ['Learn','string']
+ 
+>>> '-'.join(li)
+'Learn-string'
+ 
+>>> str.split('n')
+['Lear', ' stri', 'g']
+ 
+>>> str.split('n',1)
+['Lear', ' string']
+ 
+>>> str.rsplit('n')
+['Lear', ' stri', 'g']
+ 
+>>> str.rsplit('n',1)
+['Learn stri', 'g']
+ 
+>>> str.splitlines()
+['Learn string']
+ 
+>>> str.partition('n')
+('Lear', 'n', ' string')
+ 
+>>> str.rpartition('n')
+('Learn stri', 'n', 'g')
+
+
+string模块
+
+1.        string.atof(s) 字符串转换成浮点型
+string.atof('1.11')
+输出结果：1.11
+string.atof('1')
+输出结果：1.0
+ 
+2.        string.atoi(s[, base]) 字符串转换成整型
+string.atoi('11') or string.atoi('11', 10)
+输出结果：11
+string.atoi('11', 2)
+输出结果：3
+string.atoi('11', 8)
+输出结果：9
+string.atoi('11', 16)
+输出结果：17
+ 
+3.        string.capitalize(s) 字符串的第一个字符转换成大写
+string.capitalize('hello world')
+输出结果：Hello world
+ 
+4.        string.capwords(s[, sep]) 字符串以sep为分隔符分割后的每个字段的首位转换为大写
+string.capwords('hello world')
+输出结果：Hello World
+string.capwords('hello world', 'l')
+输出结果：HellO worlD
+ 
+5.        string.center(s, len[, fillchar])字符串转换成指定长度，不够的用fillchar补充，且补充的字符在两边
+string.center('hello world', 10, '*')
+输出结果：hello world
+string.center('hello world', 15, '*')
+输出结果：**hello world**
+ 
+6.        string.count(s, sub[, start[, end]])查询sub在s中的个数
+string.count('hello world', 'l')
+输出结果：3
+string.count('hello world', 'l', 3)
+输出结果：2
+string.count('hello world', 'l', 3, 6)
+输出结果：1
+7.        string.find(s, sub[, start,[end]]) 查询sub在s中的第一个位置
+string.find('hello world', 'l')
+输出结果：2
+string.find('hello world', 'l', 4, 6)
+输出结果：-1
+ 
+8.        string.ljust(s, len[, fillchar])字符串左对齐，不够用fillchar补充
+string.ljust('hello world', 15)
+输出结果：hello world
+string.ljust('hello world', 15, '*')
+输出结果：hello world****
+ 
+9.        string.lstrip(s[, chars]) 清除左边的空白字符
+string.lstrip(' hello world')
+输出结果：hello world
+string.lstrip('hello world', 'h')
+输出结果：ello world
+ 
+10.    string.upper(s) 字符串转换成大写的
+string.upper('hello world')
+输出结果：HELLO WORLD
+ 
+11.    string.join(list[, sep]) list里的字符串用sep连接起来
+string.join(['hello', 'world'])
+输出结果：hello world
+string.join(['hello', 'world'], '*')
+输出结果：hello*world
+ 
+12.    string.replace(s, old, new[,max]) 字符串s里的old替换为new,最多替换为max次
+string.replace('hello world', 'l', 'L')
+输出结果：heLLo worLd
+string.replace('hello world', 'l', 'L', 1)
+输出结果：heLlo world
+ 
+13.    string.translate(s, table[,delchar]) 字符串转换为指定的table里的字符，且删除指定的delchar
+table = string.maketrans('hello', 'HELLO')
+string.translate('hello world', table)
+输出结果：HELLO wOrLd
+string.translate('hello world', table, 'l')
+输出结果：HEO wOrd
+ 
+14.    string.split(s[, sep[,maxsplit]])  字符串以sep作为分隔符，maxsplit作为分隔次数进行分隔
+string.split('hello world')
+输出结果：['hello', 'world']
+string.split('hello world', 'l')
+输出结果：['he', '', 'o wor', 'd']
+string.split('hello world', 'l', 1)
+输出结果：['he', 'lo world']
+
+正则模块
+
+3.re的主要功能函数
+    常用的功能函数包括：compile、search、match、split、findall（finditer）、sub（subn）
+compile
+re.compile(pattern[, flags])
+作用：把正则表达式语法转化成正则表达式对象
+flags定义包括：
+re.I：忽略大小写
+re.L：表示特殊字符集 \w, \W, \b, \B, \s, \S 依赖于当前环境
+re.M：多行模式
+re.S：’ . ’并且包括换行符在内的任意字符（注意：’ . ’不包括换行符）
+re.U： 表示特殊字符集 \w, \W, \b, \B, \d, \D, \s, \S 依赖于 Unicode 字符属性数据库
+更多用法可以在http://www.devexception.com/sitemap_index.xml上查找
+search
+re.search(pattern, string[, flags])
+search (string[, pos[, endpos]])
+作用：在字符串中查找匹配正则表达式模式的位置，返回 MatchObject 的实例，如果没有找到匹配的位置，则返回 None。
+
+match
+re.match(pattern, string[, flags])
+match(string[, pos[, endpos]])
+作用：match() 函数只在字符串的开始位置尝试匹配正则表达式，也就是只报告从位置 0 开始的匹配情况，而 search() 函数是扫描整个字符串来查找匹配。如果想要搜索整个字符串来寻找匹配，应当用 search()。
+
+下面是几个例子：
+例：最基本的用法，通过re.RegexObject对象调用
+#!/usr/bin/env python
+import re
+r1 = re.compile(r'world')
+if r1.match('helloworld'):
+    print 'match succeeds'
+else:
+    print 'match fails'
+if r1.search('helloworld'):
+    print 'search succeeds'
+else:
+    print 'search fails'
+说明一下：r是raw(原始)的意思。因为在表示字符串中有一些转义符，如表示回车'\n'。如果要表示\表需要写为'\\'。但如果我就是需要表示一个'\'+'n'，不用r方式要写为:'\\n'。但使用r方式则为r'\n'这样清晰多了。
+
+例：设置flag
+
+#r2 = re.compile(r'n$', re.S)
+#r2 = re.compile('\n$', re.S)
+r2 = re.compile('World$', re.I)
+if r2.search('helloworld\n'):
+    print 'search succeeds'
+else:
+    print 'search fails'
+
+例：直接调用
+
+if re.search(r'abc','helloaaabcdworldn'):
+    print 'search succeeds'
+else:
+    print 'search fails'
+split
+re.split(pattern, string[, maxsplit=0, flags=0])
+split(string[, maxsplit=0])
+作用：可以将字符串匹配正则表达式的部分割开并返回一个列表
+例：简单分析ip
+
+#!/usr/bin/env python
+import re
+r1 = re.compile('W+')
+print r1.split('192.168.1.1')
+print re.split('(W+)','192.168.1.1')
+print re.split('(W+)','192.168.1.1',
+1)
+结果如下：
+['192', '168', '1', '1']
+['192', '.', '168', '.', '1', '.', '1']
+['192', '.', '168.1.1']
+
+findall
+re.findall(pattern, string[, flags])
+findall(string[, pos[, endpos]])
+作用：在字符串中找到正则表达式所匹配的所有子串，并组成一个列表返回
+例：查找[]包括的内容（贪婪和非贪婪查找）
+
+#!/usr/bin/env python
+import re
+r1 = re.compile('([.*])')
+print re.findall(r1,"hello[hi]heldfsdsf[iwonder]lo")
+r1 = re.compile('([.*?])')
+print re.findall(r1,"hello[hi]heldfsdsf[iwonder]lo")
+print re.findall('[0-9]{2}',"fdskfj1323jfkdj")
+print re.findall('([0-9][a-z])',"fdskfj1323jfkdj")
+print re.findall('(?=www)',"afdsfwwwfkdjfsdfsdwww")
+print re.findall('(?<=www)',"afdsfwwwfkdjfsdfsdwww")
+finditer
+re.finditer(pattern, string[, flags])
+finditer(string[, pos[, endpos]])
+说明：和 findall 类似，在字符串中找到正则表达式所匹配的所有子串，并组成一个迭代器返回。同样 RegexObject 有：
+
+sub
+re.sub(pattern, repl, string[, count, flags])
+sub(repl, string[, count=0])
+说明：在字符串 string 中找到匹配正则表达式 pattern 的所有子串，用另一个字符串 repl 进行替换。如果没有找到匹配 pattern 的串，则返回未被修改的 string。Repl 既可以是字符串也可以是一个函数。
+例：
+
+#!/usr/bin/env python
+import re
+p = re.compile('(one|two|three)')
+print p.sub('num','one word two words three words
+apple', 2)
+subn
+re.subn(pattern, repl, string[, count, flags])
+subn(repl, string[, count=0])
+说明：该函数的功能和 sub() 相同，但它还返回新的字符串以及替换的次数。
+
+math/cmatch(用于复数计算)模块
+
+1.math简介
+复制代码代码如下:
+
+>>> import math
+>>>dir(math)          #这句可查看所有函数名列表
+>>>help(math)         #查看具体定义及函数0原型
+2.常用函数
+复制代码代码如下:
+
+ceil(x) 取顶
+floor(x) 取底
+fabs(x) 取绝对值
+factorial (x) 阶乘
+hypot(x,y)  sqrt(x*x+y*y)
+pow(x,y) x的y次方
+sqrt(x) 开平方
+log(x)
+log10(x)
+trunc(x)  截断取整数部分
+isnan (x)  判断是否NaN(not a number)
+degree (x) 弧度转角度
+radians(x) 角度转弧度
+另外该模块定义了两个常量:
+复制代码代码如下:
+
+e = 2.718281828459045
+pi = 3.141592653589793
+random
+1.简介
+random是用于生成随机数，我们可以利用它随机生成数字或者选择字符串
+复制代码代码如下:
+
+import random
+2.常用函数
+random.random()
+用于生成一个随机浮点数：range[0.0,1.0)
+复制代码代码如下:
+
+>>> import random
+>>> random.random()
+0.999410896951364
+random.uniform(a,b)
+用于生成一个指定范围内的随机浮点数，a,b为上下限
+只要a!=b,就会生成介于两者之间的一个浮点数，若a=b，则生成的浮点数就是a
+复制代码代码如下:
+
+>>> random.uniform(10,20)
+13.224754825064881
+>>> random.uniform(20,10)
+14.104410713376437
+>>> random.uniform(10,10)
+10.0
+random.randint(a,b)
+用于生成一个指定范围内的整数，a为下限，b为上限，生成的随机整数a<=n<=b;
+若a=b，则n=a；若a>b，报错
+复制代码代码如下:
+
+>>> random.uniform(10,10)
+10.0
+>>> random.randint(10,20)
+15
+>>> random.randint(10,10)
+10
+>>> random.randint(20,10)
+Traceback (most recent call last):
+……
+ValueError: empty range for randrange() (20,11, -9)
+random.randrange([start], stop, [,step])
+从指定范围内，按指定基数递增的集合中获取一个随机数，基数缺省值为1
+复制代码代码如下:
+
+>>> random.randrange(10,100,5)
+95
+>>> random.randrange(10,100,5)
+45
+random.choice(sequence)
+从序列中获取一个随机元素，参数sequence表示一个有序类型，并不是一种特定类型，泛指list，tuple，字符串等
+复制代码代码如下:
+
+>>> random.choice([1,2,3,4])
+1
+>>> random.choice([1,2,3,4])
+3
+>>> random.choice('hello')
+'e'
+random.shuffle(x[, random])
+用于将一个列表中的元素打乱
+复制代码代码如下:
+
+>>> a = [1,2,3,4,5]
+>>> random.shuffle(a)
+>>> a
+[4, 5, 2, 1, 3]
+>>> random.shuffle(a)
+>>> a
+[3, 2, 5, 1, 4]
+random.sample(sequence, k)
+从指定序列中随机获取k个元素作为一个片段返回，sample函数不会修改原有序列
+复制代码代码如下:
+
+>>> a = [1,2,3,4,5]
+>>> random.sample(a,3)
+[1, 4, 5]
+>>> random.sample(a,3)
+[1, 2, 5]
+>>> a
+[1, 2, 3, 4, 5]
+decimal
+1.简介
+默认，浮点数学缺乏精确性
+decimal 模块提供了一个 Decimal 数据类型用于浮点数计算。相比内置的二进制浮点数实现 float这个类型有助于
+金融应用和其它需要精确十进制表达的场合，
+控制精度，
+控制舍入以适应法律或者规定要求，
+确保十进制数位精度，或者用户希望计算结果与手算相符的场合。
+Decimal 重现了手工的数学运算，这就确保了二进制浮点数无法精确保有的数据精度。 高精度使 Decimal 可以执行二进制浮点数无法进行的模运算和等值测试。
+2.使用
+复制代码代码如下:
+
+>>> from decimal import Decimal
+>>> Decimal('0.1') / Decimal('0.3')
+Decimal('0.3333333333333333333333333333')
+>>> from decimal import getcontext
+>>> getcontext().prec = 4 #设置全局精度
+>>> Decimal('0.1') / Decimal('0.3')
+Decimal('0.3333')    
+fractions
+分数类型
+构造
+复制代码代码如下:
+
+>>> from fractions import Fraction
+>>> Fraction(16, -10)  #分子分母
+Fraction(-8, 5)
+>>> Fraction(123)   #分子
+Fraction(123, 1)
+>>> Fraction('3/7')   #字符串分数
+Fraction(3, 7)
+>>> Fraction('-.125')  #字符串浮点数
+Fraction(-1, 8)
+>>> Fraction(2.25)  #浮点数
+Fraction(9, 4)
+>>> from decimal import Decimal
+>>> Fraction(Decimal('1.1')) #Decimal
+Fraction(11, 10)
+计算
+复制代码代码如下:
+
+>>> from fractions import Fraction
+>>> a = Fraction(1,2)
+>>> a
+Fraction(1, 2)
+>>> b = Fraction('1/3')
+>>> b
+Fraction(1, 3)
+>>> a + b
+Fraction(5, 6)
+>>> a - b
+Fraction(1, 6)
+
+operate模块 这个模块提供了一系列的函数操作。
+perator模块中包含了Python的各种内置操作符,诸如逻辑、比较、计算等（速度会快一些？）
+
+   abs(...)
+        abs(a) -- Same as abs(a).
+   
+    add(...)
+        add(a, b) -- Same as a + b.
+   
+    and_(...)
+        and_(a, b) -- Same as a & b.
+   
+    concat(...)
+        concat(a, b) -- Same as a + b, for a and b sequences.
+   
+    contains(...)
+        contains(a, b) -- Same as b in a (note reversed operands).
+   
+    countOf(...)
+        countOf(a, b) -- Return the number of times b occurs in a.
+   
+    delitem(...)
+        delitem(a, b) -- Same as del a[b].
+   
+    delslice(...)
+        delslice(a, b, c) -- Same as del a[b:c].
+   
+    div(...)
+        div(a, b) -- Same as a / b when __future__.division is not in effect.
+   
+    eq(...)
+        eq(a, b) -- Same as a==b.
+   
+    floordiv(...)
+        floordiv(a, b) -- Same as a // b.
+   
+    ge(...)
+        ge(a, b) -- Same as a>=b.
+   
+    getitem(...)
+        getitem(a, b) -- Same as a[b].
+   
+    getslice(...)
+        getslice(a, b, c) -- Same as a[b:c].
+   
+    gt(...)
+        gt(a, b) -- Same as a>b.
+   
+    iadd(...)
+        iadd(a, b) -- Same as a += b.
+   
+    iand(...)
+        iand(a, b) -- Same as a &= b.
+   
+    iconcat(...)
+        iconcat(a, b) -- Same as a += b, for a and b sequences.
+   
+    idiv(...)
+        idiv(a, b) -- Same as a /= b when __future__.division is not in effect.
+   
+    ifloordiv(...)
+        ifloordiv(a, b) -- Same as a //= b.
+   
+    ilshift(...)
+        ilshift(a, b) -- Same as a <<= b.
+   
+    imod(...)
+        imod(a, b) -- Same as a %= b.
+   
+    imul(...)
+        imul(a, b) -- Same as a *= b.
+    index(...)
+        index(a) -- Same as a.__index__()
+   
+    indexOf(...)
+        indexOf(a, b) -- Return the first index of b in a.
+   
+    inv(...)
+        inv(a) -- Same as ~a.
+   
+    invert(...)
+        invert(a) -- Same as ~a.
+   
+    ior(...)
+        ior(a, b) -- Same as a |= b.
+   
+    ipow(...)
+        ipow(a, b) -- Same as a **= b.
+   
+    irepeat(...)
+        irepeat(a, b) -- Same as a *= b, where a is a sequence, and b is an integer.
+   
+    irshift(...)
+        irshift(a, b) -- Same as a >>= b.
+   
+    isCallable(...)
+        isCallable(a) -- Same as callable(a).
+   
+    isMappingType(...)
+        isMappingType(a) -- Return True if a has a mapping type, False otherwise.
+   
+    isNumberType(...)
+        isNumberType(a) -- Return True if a has a numeric type, False otherwise.
+   
+    isSequenceType(...)
+        isSequenceType(a) -- Return True if a has a sequence type, False otherwise.
+   
+    is_(...)
+        is_(a, b) -- Same as a is b.
+    is_not(...)
+        is_not(a, b) -- Same as a is not b.
+   
+    isub(...)
+        isub(a, b) -- Same as a -= b.
+   
+    itruediv(...)
+        itruediv(a, b) -- Same as a /= b when __future__.division is in effect.
+   
+    ixor(...)
+        ixor(a, b) -- Same as a ^= b.
+   
+    le(...)
+        le(a, b) -- Same as a<=b.
+   
+    lshift(...)
+        lshift(a, b) -- Same as a << b.
+   
+    lt(...)
+        lt(a, b) -- Same as a<b.
+   
+    mod(...)
+        mod(a, b) -- Same as a % b.
+   
+    mul(...)
+        mul(a, b) -- Same as a * b.
+   
+    ne(...)
+        ne(a, b) -- Same as a!=b.
+   
+    neg(...)
+        neg(a) -- Same as -a.
+   
+    not_(...)
+        not_(a) -- Same as not a.
+   
+    or_(...)
+        or_(a, b) -- Same as a | b.
+    pos(...)
+        pos(a) -- Same as +a.
+   
+    pow(...)
+        pow(a, b) -- Same as a ** b.
+   
+    repeat(...)
+        repeat(a, b) -- Return a * b, where a is a sequence, and b is an integer.
+   
+    rshift(...)
+        rshift(a, b) -- Same as a >> b.
+   
+    sequenceIncludes(...)
+        sequenceIncludes(a, b) -- Same as b in a (note reversed operands; deprecated).
+   
+    setitem(...)
+        setitem(a, b, c) -- Same as a[b] = c.
+   
+    setslice(...)
+        setslice(a, b, c, d) -- Same as a[b:c] = d.
+   
+    sub(...)
+        sub(a, b) -- Same as a - b.
+   
+    truediv(...)
+        truediv(a, b) -- Same as a / b when __future__.division is in effect.
+   
+    truth(...)
+        truth(a) -- Return True if a is true, False otherwise.
+   
+    xor(...)
+        xor(a, b) -- Same as a ^ b.
+
+
+copy模块
+
+1. copy.copy 浅拷贝 只拷贝父对象，不会拷贝对象的内部的子对象。
+2. copy.deepcopy 深拷贝 拷贝对象及其子对象
+一个很好的例子：
+
+
+[python] view plain copy
+import copy  
+a = [1, 2, 3, 4, ['a', 'b']]  #原始对象  
+  
+b = a  #赋值，传对象的引用  
+c = copy.copy(a)  #对象拷贝，浅拷贝  
+d = copy.deepcopy(a)  #对象拷贝，深拷贝  
+  
+a.append(5)  #修改对象a  
+a[4].append('c')  #修改对象a中的['a', 'b']数组对象  
+  
+print 'a = ', a  
+print 'b = ', b  
+print 'c = ', c  
+print 'd = ', d  
+
+输出结果：
+a =  [1, 2, 3, 4, ['a', 'b', 'c'], 5]
+b =  [1, 2, 3, 4, ['a', 'b', 'c'], 5]
+c =  [1, 2, 3, 4, ['a', 'b', 'c']]
+d =  [1, 2, 3, 4, ['a', 'b']]
+
+这里我也说几句：
+b=a     是完全复制，a变b也会变；
+b=a[]   是切片复制，a变 b不变。
+
+sys 模块 sys 模块提供了许多函数和变量来处理 Python 运行时环境的不同部分.
+
+sys.argv
+可以用sys.argv获取当前正在执行的命令行参数的参数列表(list)。
+变量	解释
+sys.argv[0]	当前程序名
+sys.argv[1]	第一个参数
+sys.argv[0]	第二个参数
+参考代码：
+
+# encoding: utf-8
+# filename: argv_test.py
+import sys
+
+# 获取脚本名字
+print 'The name of this program is: %s' %(sys.argv[0])
+# 获取参数列表
+print 'The command line arguments are:'
+for i in sys.argv:
+    print i
+# 统计参数个数
+print 'There are %s arguments.'%(len(sys.argv)-1)
+运行结果：
+
+E:\p>python argv_test.py arg1 arg2 arg3
+The name of this program is: argv_test.py
+The command line arguments are:
+argv_test.py
+arg1
+arg2
+arg3
+There are 3 arguments.
+
+
+
+sys.platform
+获取当前执行环境的平台，如win32表示是Windows 32bit操作系统，linux2表示是linux平台；
+
+# linux 
+>>> import sys
+>>> sys.platform
+'linux2'
+
+# windows
+>>> import sys
+>>> sys.platform
+'win32'
+
+
+
+sys.path
+path是一个目录列表，供Python从中查找第三方扩展模块。在python启动时，sys.path根据内建规则、PYTHONPATH变量进行初始化。
+
+>>> sys.path
+['', 'E:\\Python27\\Lib\\idlelib', 'C:\\Windows\\system32\\python27.zip', 'E:\\Python27\\DLLs', 'E:\\Python27\\lib', 'E:\\Python27\\lib\\plat-win', 'E:\\Python27\\lib\\lib-tk', 'E:\\Python27', 'E:\\Python27\\lib\\site-packages']
+有时候为了让python能够找到我们自己定义的模块，需要修改sys.path的内容，比如：
+
+# 在path的开始位置 插入test
+>>> sys.path.insert(0,'test')
+>>> sys.path
+['test', '', 'E:\\Python27\\Lib\\idlelib', 'C:\\Windows\\system32\\python27.zip', 'E:\\Python27\\DLLs', 'E:\\Python27\\lib', 'E:\\Python27\\lib\\plat-win', 'E:\\Python27\\lib\\lib-tk', 'E:\\Python27', 'E:\\Python27\\lib\\site-packages']
+# 可以成功import test
+>>> import test
+# 找不到 other 这个模块
+>>> import other
+Traceback (most recent call last):
+  File "<pyshell#10>", line 1, in <module>
+    import other
+ImportError: No module named other
+# 需要添加path
+>>> sys.path.insert(0,'other')
+>>> import other
+也可以用sys.path.append(“mine module path”)来添加自定义的module。
+
+
+
+sys.builtin_module_names
+sys.builtin_module_names返回一个列表，包含内建模块的名字。如：
+
+>>> import sys
+>>> print sys.builtin_module_names
+('__builtin__', '__main__', '_ast', '_bisect', '_codecs', '_codecs_cn', '_codecs_hk', '_codecs_iso2022', '_codecs_jp', '_codecs_kr', '_codecs_tw', '_collections', '_csv', '_functools', '_heapq', '_hotshot', '_io', '_json', '_locale', '_lsprof', '_md5', '_multibytecodec', '_random', '_sha', '_sha256', '_sha512', '_sre', '_struct', '_subprocess', '_symtable', '_warnings', '_weakref', '_winreg', 'array', 'audioop', 'binascii', 'cPickle', 'cStringIO', 'cmath', 'datetime', 'errno', 'exceptions', 'future_builtins', 'gc', 'imageop', 'imp', 'itertools', 'marshal', 'math', 'mmap', 'msvcrt', 'nt', 'operator', 'parser', 'signal', 'strop', 'sys', 'thread', 'time', 'xxsubtype', 'zipimport', 'zlib')
+代码示例：
+
+# encoding: utf-8
+# find_module.py
+
+import sys
+
+# print sys.builtin_module_names
+
+def find_module(module):
+    if module in sys.builtin_module_names:
+        print module," => ","__builtin__"
+    else:
+        print module,"=> ",__import__(module).__file__
+
+
+find_module('os')
+find_module('sys')
+find_module('strop')
+find_module('zlib')
+find_module('string')
+
+# 运行结果：
+>>> 
+======================== RESTART: E:/p/find_module.py ========================
+os =>  E:\Python27\lib\os.pyc
+sys  =>  __builtin__
+strop  =>  __builtin__
+zlib  =>  __builtin__
+string =>  E:\Python27\lib\string.pyc
+
+
+sys.exit(n)
+调用sys.exit(n)可以中途退出程序，当参数非0时，会引发一个SystemExit异常，从而可以在主程序中捕获该异常。
+看代码：
+
+# encoding: utf-8
+import sys
+
+print 'running...'
+
+try:
+    sys.exit(1)
+except SystemExit:
+    print 'SystemExit exit 1'
+
+print 'exited'
+运行结果：
+
+>>> 
+======================= RESTART: E:/p/sys_exit_test.py =======================
+running...
+SystemExit exit 1
+exited
+也可以自定义exitfunc方法，用于程序退出前调用，进行一些清理动作。
+
+atexit模块
+
+ atexit模块很简单，只定义了一个register函数用于注册程序退出时的回调函数，我们可以在回调函数中做一些资源清理的操作。
+
+        注意回调函数只有正常退出的时候才会调用，如果程序是被信号杀死或者因为严重错误导致退出，或者使用os._exit()退出程序的时候，回调函数不会调用。
+
+    我们也可以通过sys.exitfunc来注册回调，但通过它只能注册一个回调，而且还不支持参数。所以建议大家使用atexit来注册回调函数。但千万不要在程序中同时使用这两种方式，否则通过atexit注册的回调可能不会被正常调用。其实通过查阅atexit的源码，你会发现原来它内部是通过sys.exitfunc来实现的，它先把注册的回调函数放到一个列表中，当程序退出的时候，按先进后出的顺序调用注册的回调。如果回调函数在执行过程中抛出了异常，atexit会打印异常的文字信息，并继续执行下一下回调，直到所有的回调都执行完毕，它会重新抛出最后接收到的异常。
+
+atexit.register(func[,*args[,**kargs]])
+    注册func函数，当程序退出时将调用这个函数。func需要的参数可以先传递给register函数。
+       示例：计数的简单实现，从文件中获取计数值，当程序正常退出的时候自动加1。
+复制代码
+try:
+    _count = int(open("/tmp/counter").read())
+exceptIOError:
+    _count =0
+
+def incrcounter(n):
+    global _count
+    _count = _count + n
+
+def savecounter():
+    open("/tmp/counter","w").write("%d"% _count)
+    import atexit
+    atexit.register(savecounter)
+        还可以给register函数传递位置参数和关键字参数。
+
+def goodbye(name, adjective):
+    print'Goodbye, %s, it was %s to meet you.'%(name, adjective)
+    import atexit
+    atexit.register(goodbye,'Donny','nice')
+    # or:
+    atexit.register(goodbye, adjective='nice', name='Donny')
+复制代码
+ 
+        除此之外，还可以用作修饰器函数。
+import atexit
+
+@atexit.register
+def goodbye():
+    print"You are now leaving the Python sector."
+
+time模块 
+http://qinxuye.me/article/details-about-time-module-in-python/
+
+ types 模块
+ http://blog.csdn.net/franktan2010/article/details/45739927
+
+关于数据结构
+
+struct模块用于struct 模块用于在二进制数据结构
+(例如 C 中的 struct )和 Python 元组间转换.
+
+  struct.pack
+
+struct.pack用于将Python的值根据格式符，转换为字符串（因为Python中没有字节(Byte)类型，可以把这里的字符串理解为字节流，或字节数组）。其函数原型为：struct.pack(fmt, v1, v2, …)，参数fmt是格式字符串，关于格式字符串的相关信息在下面有所介绍。v1, v2, …表示要转换的python值。下面的例子将两个整数转换为字符串（字节流）:
+
+Python
+
+import struct
+
+a = 20
+b = 400
+
+str = struct.pack("ii", a, b)  #转换后的str虽然是字符串类型，但相当于其他语言中的字节流（字节数组），可以在网络上传输
+print 'length:', len(str)
+print str
+print repr(str)
+
+#---- result
+#length: 8
+#    ----这里是乱码
+#'/x14/x00/x00/x00/x90/x01/x00/x00'
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+import struct
+ 
+a = 20
+b = 400
+ 
+str = struct.pack("ii", a, b)  #转换后的str虽然是字符串类型，但相当于其他语言中的字节流（字节数组），可以在网络上传输
+print 'length:', len(str)
+print str
+print repr(str)
+ 
+#---- result
+#length: 8
+#    ----这里是乱码
+#'/x14/x00/x00/x00/x90/x01/x00/x00'
+格式符”i”表示转换为int，’ii’表示有两个int变量。进行转换后的结果长度为8个字节（int类型占用4个字节，两个int为8个字节），可以看到输出的结果是乱码，因为结果是二进制数据，所以显示为乱码。可以使用python的内置函数repr来获取可识别的字符串，其中十六进制的0x00000014, 0x00001009分别表示20和400。
+
+struct.unpack
+
+struct.unpack做的工作刚好与struct.pack相反，用于将字节流转换成python数据类型。它的函数原型为：struct.unpack(fmt, string)，该函数返回一个元组。 下面是一个简单的例子：
+
+Python
+
+str = struct.pack("ii", 20, 400)
+a1, a2 = struct.unpack("ii", str)
+print 'a1:', a1
+print 'a2:', a2
+
+#---- result:
+#a1: 20
+#a2: 400
+1
+2
+3
+4
+5
+6
+7
+8
+str = struct.pack("ii", 20, 400)
+a1, a2 = struct.unpack("ii", str)
+print 'a1:', a1
+print 'a2:', a2
+ 
+#---- result:
+#a1: 20
+#a2: 400
+struct.calcsize
+
+struct.calcsize用于计算格式字符串所对应的结果的长度，如：struct.calcsize(‘ii’)，返回8。因为两个int类型所占用的长度是8个字节。
+
+struct.pack_into, struct.unpack_from
+
+这两个函数在Python手册中有所介绍，但没有给出如何使用的例子。其实它们在实际应用中用的并不多。Google了很久，才找到一个例子，贴出来共享一下：
+
+Python
+
+import struct
+from ctypes import create_string_buffer
+
+buf = create_string_buffer(12)
+print repr(buf.raw)
+
+struct.pack_into("iii", buf, 0, 1, 2, -1)
+print repr(buf.raw)
+
+print struct.unpack_from('iii', buf, 0)
+
+#---- result
+#'/x00/x00/x00/x00/x00/x00/x00/x00/x00/x00/x00/x00'
+#'/x01/x00/x00/x00/x02/x00/x00/x00/xff/xff/xff/xff'
+#(1, 2, -1)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+import struct
+from ctypes import create_string_buffer
+ 
+buf = create_string_buffer(12)
+print repr(buf.raw)
+ 
+struct.pack_into("iii", buf, 0, 1, 2, -1)
+print repr(buf.raw)
+ 
+print struct.unpack_from('iii', buf, 0)
+ 
+#---- result
+#'/x00/x00/x00/x00/x00/x00/x00/x00/x00/x00/x00/x00'
+#'/x01/x00/x00/x00/x02/x00/x00/x00/xff/xff/xff/xff'
+#(1, 2, -1)
+
+
+array模块  数组
+>>> import array#定义了一种序列数据结构
+>>> help(array)　　
+　　#创建数组，相当于初始化一个数组，如：d={},k=[]等等
+    array(typecode [, initializer]) -- create a new array
+　　#a=array.array(‘c‘)，决定着下面操作的是字符，并是单个字符
+　　#a=array.array(‘i‘)，决定着下面操作的是整数
+     |  Attributes:
+     |  
+     |  typecode -- the typecode character used to create the array
+     |  itemsize -- the length in bytes of one array item
+     |  
+     |  Methods defined here:
+     |  •append(...)
+     |      append(x)
+     |      #向array数组添加一个数值value
+     |      Append new value x to the end of the array.
+　　　　　　　　>>> a=array.array(‘i‘)#整数，b与i类似
+　　　　　　　　>>> a.append(8)
+　　　　　　　　>>> a.append(81)
+　　　　　　　　>>> a
+　　　　　　　　array(‘i‘, [8, 81])#构成list　
+
+　　　　　　　　>>> a=array.array(‘c‘)#单个字符
+
+　　　　　　　　>>> a.append(‘g‘)
+　　　　　　　　>>> a.append(‘g‘)
+　　　　　　　　>>> a
+　　　　　　　　array(‘c‘, ‘gg‘)#单个字符连接
+
+　　　　　　　　>>> a=array.array(‘u‘)#Unicode character，意味着下面将要输入的是unicode字符串.
+　　　　　　　　>>> a.append(u‘x‘)#不要漏掉u
+　　　　　　　　>>> a.append(u‘x‘)
+　　　　　　　　>>> a
+　　　　　　　　array(‘u‘, u‘xx‘)
+
+|  
+     |  •buffer_info(...)
+     |      buffer_info() -> (address, length)#当前内存地址和数组长度
+　　　　　　  #返回一个元组（地址，长度），给出了当前的内存地址和用于存储数组内容的缓冲区的长度
+　　　　　　　　>>> a.buffer_info()
+　　　　　　　　(19225728, 7)
+
+     |      Return a tuple (address, length) giving the current memory address and
+     |      the length in items of the buffer used to hold array‘s contents
+     |      The length should be multiplied by the itemsize attribute to calculate
+     |      the buffer length in bytes.
+     |  
+     |  byteswap(...)
+     |      byteswap()
+     |      
+     |      Byteswap all items of the array.  If the items in the array are not 1, 2,
+     |      4, or 8 bytes in size, RuntimeError is raised.
+     |  
+     |  •count(...)
+     |      count(x)　　　　#统计array数组中某个元素(x)的个数.
+　　　　　　　　>>> a
+　　　　　　　　array(‘i‘, [9, 2, 9, 4, 10, 10, 10])
+　　　　　　　　>>> a.count(10)
+　　　　　　　　3
+　　　　　　　　>>> a.count(9)
+　　　　　　　　2
+
+     |      Return number of occurrences of x in the array.
+     |  
+     |  •extend(...)
+     |      extend(array or iterable)　　#参数接受 数组和可迭代对象
+　　　　　　　　>>> a
+　　　　　　　　array(‘i‘, [9, 2, 9, 4, 10, 10, 10])
+　　　　　　　　>>> a.extend([3,5])
+　　　　　　　　>>> a
+　　　　　　　　array(‘i‘, [9, 2, 9, 4, 10, 10, 10, 3, 5])
+
+　　　　　　　　#如果添加整数会出现什么错误？
+
+　　　　　　　　>>> a.extend(10)
+
+　　　　　　　　Traceback (most recent call last):
+　　　　　　　　File "<pyshell#131>", line 1, in <module>
+　　　　　　　　a.extend(10)
+　　　　　　　　TypeError: ‘int‘ object is not iterable  #int不是可迭代对象
+
+     |      Append items to the end of the array.#在末尾添加数组或可迭代对象
+     |  
+     |  fromfile(...)
+     |      fromfile(f, n)
+     |      
+     |      Read n objects from the file object f and append them to the end of the
+     |      array.  Also called as read.
+     |  
+     |  fromlist(...)
+     |      fromlist(list)
+     |      
+     |      Append items to array from list.
+     |  
+     |  fromstring(...)
+     |      fromstring(string)
+     |      
+     |      Appends items from the string, interpreting it as an array of machine
+     |      values,as if it had been read from a file using the fromfile() method).
+     |  
+     |  fromunicode(...)
+     |      fromunicode(ustr)
+     |      
+     |      Extends this array with data from the unicode string ustr.
+     |      The array must be a type ‘u‘ array; otherwise a ValueError
+     |      is raised.  Use array.fromstring(ustr.decode(...)) to
+     |      append Unicode data to an array of some other type.
+     |  
+     |  index(...)
+     |      index(x)
+     |      
+     |      Return index of first occurrence of x in the array.
+     |  
+     |  •insert(...)
+     |      insert(i,x)　　#在i的位置插入一个新的item在array中
+     |      
+     |      Insert a new item x into the array before position i.
+     |  
+     |  •pop(...)
+     |      pop([i])
+　　　　　　　　>>> a=array.array(‘i‘)
+　　　　　　　　>>> a.append(2)
+　　　　　　　　>>> a.append(9)
+　　　　　　　　>>> a.append(3)
+　　　　　　　　>>> a
+　　　　　　　　array(‘i‘, [2, 9, 3])
+　　　　　　　　>>> a.pop()#默认删除索引为-1的元素，最后一个元素，如果传参数则按参数索引来删除元素.
+　　　　　　　　3
+　　　　　　　　>>> a
+　　　　　　　　array(‘i‘, [2, 9])
+
+     |      Return the i-th element and delete it from the array. i defaults to -1.
+     |  
+     |  read(...)
+     |      fromfile(f, n)
+     |      
+     |      Read n objects from the file object f and append them to the end of the
+     |      array.  Also called as read.
+     |  
+     |  •remove(...)
+     |      remove(x)#删除指定元素，x为需要删除的元素.
+     |      Remove the first occurrence of x in the array.
+     |  
+     |  reverse(...)
+     |      reverse()
+     |      
+     |      Reverse the order of the items in the array.
+     |  
+     |  tofile(...)
+     |      tofile(f)
+     |      
+     |      Write all items (as machine values) to the file object f.  Also called as
+     |      write.
+     |  
+     |  •tolist(...)
+     |      tolist() -> list
+　　　　　　　　a=array(‘i‘, [9, 2, 9, 4, 10, 10, 10, 3, 5])
+　　　　　　　　>>> a.list()
+
+　　　　　　　　a.list()
+　　　　　　　　AttributeError: ‘array.array‘ object has no attribute ‘list‘#array.array没有list属性
+　　　　　　　　>>> a.tolist()
+　　　　　　　　[9, 2, 9, 4, 10, 10, 10, 3, 5]
+
+     |      Convert array to an ordinary list with the same items.
+     |  
+     |  •tostring(...)
+     |      tostring() -> string
+　　　　　　　　array(‘i‘, [9, 2, 9, 4])
+　　　　　　　　>>> a.tostring()　　　　#转化为string
+　　　　　　　　‘\t\x00\x00\x00\x02\x00\x00\x00\t\x00\x00\x00\x04\x00\x00\x00‘
+
+     |  •tounicode(...)
+     |      tounicode() -> unicode  #将unicode的array数组，转化为unicode string字符串。
+　　　　　　　　>>> a=array.array(‘u‘)
+　　　　　　　　>>> a.append(u‘xiaodeng‘)
+
+　　　　　　　　a.append(u‘xiaodeng‘)
+　　　　　　　　TypeError: array item must be unicode character
+　　　　　　　　>>> a.append(u‘x‘)
+　　　　　　　　>>> a.append(u‘i‘)
+　　　　　　　　>>> a.tounicode()
+　　　　　　　　u‘xi‘
+
+|  
+     |  write(...)
+     |      tofile(f)
+     |      
+     |      Write all items (as machine values) to the file object f.  Also called as
+     |      write.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  itemsize
+     |      the size, in bytes, of one array item
+     |  
+     |  typecode
+     |      the typecode character used to create the array
+     |  
+     |  ----------------------------------------------------------------------
+
+
+Type code 　　C Type 　　　　　　　　Minimum size in bytes#最小字节大小
+‘c‘ 　　　　 character (字符,单个字符)　　　　　　 1 
+‘b‘ 　　 　　signed integer 　　 　1 
+‘B‘ 　　　　 unsigned integer　　  1 
+‘u‘ 　　　　 Unicode character　　 2 
+‘h‘ 　　　　 signed integer 　　 　2 
+‘H‘　　　　  unsigned integer 　　 2 
+‘i‘　　　　  signed integer 　　 　2 
+‘I‘ 　　　　 unsigned integer 　　 2 
+‘l‘ 　　　　 signed integer 　　 　4 
+‘L‘ 　　　　 unsigned integer　　  4 
+‘f‘ 　　　　 floating point 　　 　4 
+‘d‘ 　　　　 floating point 　　 　8
+
+python中的list和array的不同之处
+
+       python中的list是python的内置数据类型，list中的数据类不必相同的，而array的中的类型必须全部相同。在list中的数据类型保存的是数据的存放的地址，简单的说就是指针，并非数据，这样保存一个list就太麻烦了，例如list1=[1,2,3,'a']需要4个指针和四个数据，增加了存储和消耗cpu。
+      numpy中封装的array有很强大的功能，里面存放的都是相同的数据类型
+
+list1=[1,2,3,'a']
+print list1
+
+a=np.array([1,2,3,4,5])
+b=np.array([[1,2,3],[4,5,6]])
+c=list(a)   # array到list的转换
+print a,np.shape(a)
+print b,np.shape(b)
+print c,np.shape(c)
+运行结果：
+[1, 2, 3, 'a'] # 元素数据类型不同，并且用逗号隔开
+[1 2 3 4 5] (5L,) # 一维数组，类型用tuple表示
+[[1 2 3]
+ [4 5 6]] (2L, 3L)
+[1, 2, 3, 4, 5] (5L,)
+
+创建：
+
+    array的创建：参数既可以是list，也可以是元组.使用对应的属性shape直接得到形状
+a=np.array((1,2,3,4,5))# 参数是元组
+b=np.array([6,7,8,9,0])# 参数是list
+c=np.array([[1,2,3],[4,5,6]])# 参数二维数组
+print a,b,
+c.shape()
+
+   也可以直接改变属性array的形状，-1代表的是自己推算。这里并不是T, reshape(())也可以
+c = np.array([[1, 2, 3, 4],[4, 5, 6, 7], [7, 8, 9, 10]])
+c.shape # (3L, 4L)
+c.shape=4,-1   //c.reshape((2,-1))
+c  
+<pre style="box-sizing: border-box; overflow: auto; font-size: 14px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 17.0001px; word-break: break-all; word-wrap: break-word; border: 0px; border-radius: 0px; white-space: pre-wrap; vertical-align: baseline; background-color: rgb(255, 255, 255);">array([[ 1,  2,  3],
+       [ 4,  4,  5],
+       [ 6,  7,  7],
+       [ 8,  9, 10]])
+   
+   这里的reshape最终相当于是一个浅拷贝，也就是说还是和原来的书c使用相同的内存空间
+d=c.reshape((2,-1))
+d[1:2]=100
+c
+
+array([[  1,   2,   3],
+       [  4,   4,   5],
+       [100, 100, 100],
+       [100, 100, 100]])
+
+   前面在创建数组的时候并没有使用数据类型，这里我们也可以使用数据类型。默认的是int32.
+a1=np.array([[1,2,3],[4,5,6]],dtype=np.float64)
+print a1.dtype,a.dtype  #float64 int32<pre style="margin-top: 0px; margin-bottom: 0px; line-height: 17.0001px; box-sizing: border-box; overflow: auto; font-size: 14px; padding: 0px; word-break: break-all; word-wrap: break-word; border: 0px; border-radius: 0px; white-space: pre-wrap; vertical-align: baseline; background-color: rgb(255, 255, 255);">
+前面在创建的时候我们都是使用的np.array()方法从tuple或者list转换成为array，感觉很是费劲，numpy自己提供了很多的方法让我们自己直接创建一个array.
+ 
+arr1=np.arange(1,10,1) # 
+arr2=np.linspace(1,10,10)
+print arr1,arr1.dtype
+print arr2,arr2.dtype
+[1 2 3 4 5 6 7 8 9] int32
+[  1.   2.   3.   4.   5.   6.   7.   8.   9.  10.] float64
+
+   np.arange(a,b,c)表示产生从a-b不包括b，间隔为c的一个array，数据类型默认是int32。但是linspace(a,b,c)表示的是把a-b平均分成c分，它包括b。
+   
+   有时候我们需要对于每一个元素的坐标进行赋予不同的数值，可以使用fromfunction函数
+
+def fun(i):
+    return i%4+2
+np.fromfunction(fun,(10,))
+
+array([ 2.,  3.,  4.,  5.,  2.,  3.,  4.,  5.,  2.,  3.])
+   
+   fromfunction必须支持多维数组，所以他的第二个参数必须是一个tuple，只能是(10,),(10)是错误的。
+
+def fun2(i,j):
+    return (i+1)*(j+1)
+np.fromfunction(fun2,(9,9))
+
+array([[  1.,   2.,   3.,   4.,   5.,   6.,   7.,   8.,   9.],
+       [  2.,   4.,   6.,   8.,  10.,  12.,  14.,  16.,  18.],
+       [  3.,   6.,   9.,  12.,  15.,  18.,  21.,  24.,  27.],
+       [  4.,   8.,  12.,  16.,  20.,  24.,  28.,  32.,  36.],
+       [  5.,  10.,  15.,  20.,  25.,  30.,  35.,  40.,  45.],
+       [  6.,  12.,  18.,  24.,  30.,  36.,  42.,  48.,  54.],
+       [  7.,  14.,  21.,  28.,  35.,  42.,  49.,  56.,  63.],
+       [  8.,  16.,  24.,  32.,  40.,  48.,  56.,  64.,  72.],
+       [  9.,  18.,  27.,  36.,  45.,  54.,  63.,  72.,  81.]])
+    
+    虽然说，这里提供了很多的直接产生array的方式，但是大部分情况我们都是会从list进行转换，因为在实际的处理中，我们需要从txt加载文件，那样直接读入的数据显示存放到list中，需要处理的时候我们转换到array,因为
+array的设计更加符合我们的使用，涉及到矩阵的运算在使用mat，那么list主要就是用进行元素的索取。
+
+def loaddataSet(fileName):  
+    file=open(fileName)  
+    dataMat=[]  //
+    for line in file.readlines():  
+        curLine=line.strip().split('\t')  
+        floatLine=map(float,curLine)//这里使用的是map函数直接把数据转化成为float类型  
+        dataMat.append(floatLine)  
+    return dataMat  
+
+    上面的韩顺返回最终的数据就是最初的list数据集，再根据不同的处理需求是转化到array还是mat。其实array是mat的父类，能用mat的地方，array理论上都能传入。
+
+
+ 元素访问：
+     
+arr[5] #5
+arr[3:5] #array([3, 4])
+arr[:5] #array([0, 1, 2, 3, 4])
+arr[:-1]# array([0, 1, 2, 3, 4, 5, 6, 7, 8])
+arr[:] #array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+arr[2:4]=100 # array([  0,   1, 100, 100,   4,   5,   6,   7,   8,   9])
+arr[1:-1:2] #array([  1, 100,   5,   7]) 2 是间隔
+arr[::-1] #array([  9,   8,   7,   6,   5,   4, 100, 100,   1,   0]) 
+arr[5:2:-1]# -1的间隔表示从右向左所以5>2  #array([  5,   4, 100])
+
+   
+   上面是array的一维数组的访问方式，我们再来看看二维的处理方式
+print c[1:2]#  c[1:2].shape-->(1L, 3L)
+print c[1:2][0]  # shape-->(3L,)
+
+[[4 4 5]]
+[4 4 5]
+
+print c[1]
+print c[1:2]
+
+[4 4 5]
+[[4 4 5]]
+
+print c[1][2]
+print c[1:4]
+print c[1:4][0][2]
+
+5
+[[  4   4   5]
+ [100 100 100]
+ [100 100 100]]
+5
+
+   可以看出对于有:的表达最终的结果外面还嵌套一层list的[]，。访问的一定要注意，python最bug的就是，语法
+灵活，不管怎样写索引语法都是正确的，但是最终的书结果却让你大跌眼镜。
+
+    还有array的索引最终产生的是一个一个原始数据的浅拷贝，还和原来的数据共用一块儿内存
+
+b=arr[1:6]
+b[:3]=0
+arr  #<pre style="box-sizing: border-box; overflow: auto; font-size: 14px; padding: 0px; margin-top: 0px; margin-bottom: 0px; line-height: 17.0001px; word-break: break-all; word-wrap: break-word; border: 0px; border-radius: 0px; white-space: pre-wrap; vertical-align: baseline; background-color: rgb(255, 255, 255);">array([0, 0, 0, 0, 4, 5, 6, 7, 8, 9])
+    
+    产生上面的原因是因为array中直接存放的数据，拷贝的话直接拿走的是pointer，没有取走数据，但是list却会直接发生深拷贝，数据指针全部带走
+list1=list(c)
+list1[1]=0
+list1  #上面修改的0并没有被改变
+
+[array([1, 2, 3]), 0, array([100, 100, 100]), array([100, 100, 100])]
+
+   除了这些之外还有自己的更加牛掰的方式（只能用array)
+   1）使用布尔数组.感觉甚是强大，就不要自己写什么判断语句啦，注意这种方式得到结果不和原始数组共享空间。布尔索引仅仅适用于数组array，list没资格用。布尔索引最终得到下标索引为true的数据。索引只能是布尔数组
+a=np.array(a*2)
+a>5
+a[a>5]  # 
+array([16, 32, 48, 64, 80, 16, 32, 48, 64, 80])
+   
+   2)列表索引
+
+      列表索引可以是数组和list。返回的数据不和原来的数据共享内存。索引可以是list和array
+x=np.arange(10)
+index=[1,2,3,4,5]
+arr_index=np.array(index)
+print x
+print x[index]  # list索引
+print x[arr_index]  # array索引
+
+[0 1 2 3 4 5 6 7 8 9]
+[1 2 3 4 5]
+[1 2 3 4 5]
+
+  array和list区别*2
+a=np.arange(10)
+lista=list(a)
+print a*2
+print lista*2
+
+[ 0  2  4  6  8 10 12 14 16 18]
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+  array的广播
+
+a = np.arange(0, 60, 10).reshape(-1, 1)
+b = np.arange(0, 5)
+print a
+print b
+[[ 0]
+ [10]
+ [20]
+ [30]
+ [40]
+ [50]]
+[0 1 2 3 4]
+
+print np.add(a,b,c)
+
+[[ 0  1  2  3  4]
+ [10 11 12 13 14]
+ [20 21 22 23 24]
+ [30 31 32 33 34]
+ [40 41 42 43 44]杀
+ [50 51 52 53 54]]
+
+
+创建一维数组：
+    [0 for i in range(n)]
+二维数组：
+    [[0 for i in range(width)]for j in range(height)]
+
+binascii 模块
+各种进制的转化（待研究）
+
+
+pprint 模块
+pprint 模块( pretty printer )用于打印 Python 数据结构. 当你在命令行下
+打印特定数据结构时你会发现它很有用(输出格式比较整齐, 便于阅读).
+
+
+
+2.语句用法
+pass                    空语句块
+元组的使用方法：         用括号创建以后不能改变的列表:  zoo=('fish','dog','cat') 
+                        用于打印避免过多的引号和逗号： print('%a is %b years old'%(name,age))
+切片用法：               对于一个list： shoplist[0],[-2],[:-2],[1:] 第一个到倒数第二个
+
+
+3.注意事项
