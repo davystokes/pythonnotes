@@ -1,0 +1,82 @@
+1.函数格式：input()
+
+2.函数功能：接受一个标准输入数据，返回string类型。ctrl+z结束输入。
+
+3.实例：
+
+默认input（）：等待一个任意字符的输入
+
+str=input（‘input a string:\n’）:接受输入数据作为string类型传给str，\n为提示信息换行。
+
+4.接受多个数据输入，使用eval（）函数，间隔符必须是逗号
+
+>>> lines
+['', '', '', '84', '2', '3', '']
+>>> a,b,c=eval(input())
+1,2,3
+>>> a
+1
+>>> c
+3
+
+5.接受多行输入的一个方法
+
+>>> sen='end'　　#作为结束符
+>>> list2=[]
+
+>>> for line in iter(input,ends):
+line1=line.split(',')
+list2.append(line1)
+
+
+23,34
+25,78
+end
+>>> list2
+[['23', '34'], ['25', '78']]
+
+二、输出
+
+1.函数格式：print（[object,...],sep='',end='\n',file=sys.stdout）(end默认值为回车，可自定义符号)
+
+2.实例
+
+print():输出一个空行
+
+格式化输出
+
+#%x --- hex 十六进制
+#%d --- dec 十进制
+#%o --- oct 八进制
+#%s --- 字符串
+#%f --- float 浮点数
+例1：
+
+>>> str1='the value is'
+>>> num1=11
+>>> print('%s%d'%(str1,num1))
+the value is11
+
+例2：
+
+PI=3.1415926
+
+print("PI = %10.3f" % math.pi) #输出PI =       3.142
+
+print("PI = %-10.3f" % math.pi) #输出PI = 3.142
+
+例3：
+
+print("%.3s" %("abcde")) #输出abc
+
+print("%.*s" %(4,"abcde")) #输出abcd
+
+print("%10.3s" %("abcde")) #输出        abc(总长度为10，字符长度不够前面填空格)
+
+例4：打印多行
+
+print(""" 你的内容 """) 或者 print(''' 你的内容 ''')
+
+例5：打印纯文本，不使用转义字符：print(r'内容')或者print(R'内容')
+
+print(r'abc\n') #直接打印字符串abc\n
